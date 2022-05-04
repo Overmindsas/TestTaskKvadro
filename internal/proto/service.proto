@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package internal;
+option go_package = "github.com/Overmindsas/TestTaskKvadro";
+
+service API {
+    rpc FindBook(Author) returns (Book){}
+    rpc FindAuthor(Book) returns (Author){}
+}
+
+message Author {
+    string author = 1;
+}
+
+message Book {
+    string book = 1;
+}
+
