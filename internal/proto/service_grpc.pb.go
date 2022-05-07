@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.15.8
-// source: internal/proto/service.proto
+// source: proto/service.proto
 
 package TestTaskKvadro
 
@@ -137,5 +137,5 @@ var API_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "internal/proto/service.proto",
+	Metadata: "proto/service.proto",
 }
