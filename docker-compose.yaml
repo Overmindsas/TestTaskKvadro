@@ -5,7 +5,7 @@ services:
     image: mysql:8.0
     restart: always
     volumes:
-      - ./db-dump:/docker-entrypoint-initdb.d
+      - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:
       MYSQL_DATABASE: "kvadodb"
       MYSQL_ROOT_PASSWORD: root

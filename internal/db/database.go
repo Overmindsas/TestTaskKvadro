@@ -32,7 +32,7 @@ func DbConnect() (*sql.DB, error) {
 }
 
 func (sq *Repo) DbFindAuthor() {
-	res, err := sq.db.Query("SELECT book FROM BookAuthor WHERE author = ")
+	res, err := sq.db.Query("SELECT book FROM BookAuthor WHERE author = 'King'")
 	if err != nil {
 		log.Println(err)
 	}
