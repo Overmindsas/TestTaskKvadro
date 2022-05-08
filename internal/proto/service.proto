@@ -4,15 +4,23 @@ package internal;
 option go_package = "github.com/Overmindsas/TestTaskKvadro";
 
 service API {
-    rpc FindBook(Author) returns (Book){}
-    rpc FindAuthor(Book) returns (Author){}
+    rpc FindBook(Author) returns (BookList){}
+    rpc FindAuthor(Book) returns (Authorlist){}
 }
 
 message Author {
     string author = 1;
 }
 
+message Authorlist {
+    repeated Author authors = 1;
+}
+
 message Book {
     string book = 1;
+}
+
+message BookList {
+    repeated Book books = 1;
 }
 

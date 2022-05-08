@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.15.8
-// source: proto/service.proto
+// source: internal/proto/service.proto
 
 package TestTaskKvadro
 
@@ -22,8 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type APIClient interface {
-	FindBook(ctx context.Context, in *Author, opts ...grpc.CallOption) (*Book, error)
-	FindAuthor(ctx context.Context, in *Book, opts ...grpc.CallOption) (*Author, error)
+	FindBook(ctx context.Context, in *Author, opts ...grpc.CallOption) (*BookList, error)
+	FindAuthor(ctx context.Context, in *Book, opts ...grpc.CallOption) (*Authorlist, error)
 }
 
 type aPIClient struct {
@@ -34,8 +34,8 @@ func NewAPIClient(cc grpc.ClientConnInterface) APIClient {
 	return &aPIClient{cc}
 }
 
-func (c *aPIClient) FindBook(ctx context.Context, in *Author, opts ...grpc.CallOption) (*Book, error) {
-	out := new(Book)
+func (c *aPIClient) FindBook(ctx context.Context, in *Author, opts ...grpc.CallOption) (*BookList, error) {
+	out := new(BookList)
 	err := c.cc.Invoke(ctx, "/internal.API/FindBook", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -43,8 +43,8 @@ func (c *aPIClient) FindBook(ctx context.Context, in *Author, opts ...grpc.CallO
 	return out, nil
 }
 
-func (c *aPIClient) FindAuthor(ctx context.Context, in *Book, opts ...grpc.CallOption) (*Author, error) {
-	out := new(Author)
+func (c *aPIClient) FindAuthor(ctx context.Context, in *Book, opts ...grpc.CallOption) (*Authorlist, error) {
+	out := new(Authorlist)
 	err := c.cc.Invoke(ctx, "/internal.API/FindAuthor", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -56,8 +56,8 @@ func (c *aPIClient) FindAuthor(ctx context.Context, in *Book, opts ...grpc.CallO
 // All implementations must embed UnimplementedAPIServer
 // for forward compatibility
 type APIServer interface {
-	FindBook(context.Context, *Author) (*Book, error)
-	FindAuthor(context.Context, *Book) (*Author, error)
+	FindBook(context.Context, *Author) (*BookList, error)
+	FindAuthor(context.Context, *Book) (*Authorlist, error)
 	mustEmbedUnimplementedAPIServer()
 }
 
@@ -65,10 +65,10 @@ type APIServer interface {
 type UnimplementedAPIServer struct {
 }
 
-func (UnimplementedAPIServer) FindBook(context.Context, *Author) (*Book, error) {
+func (UnimplementedAPIServer) FindBook(context.Context, *Author) (*BookList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindBook not implemented")
 }
-func (UnimplementedAPIServer) FindAuthor(context.Context, *Book) (*Author, error) {
+func (UnimplementedAPIServer) FindAuthor(context.Context, *Book) (*Authorlist, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindAuthor not implemented")
 }
 func (UnimplementedAPIServer) mustEmbedUnimplementedAPIServer() {}
@@ -137,5 +137,5 @@ var API_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/service.proto",
+	Metadata: "internal/proto/service.proto",
 }

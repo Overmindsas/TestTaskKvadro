@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 
@@ -11,6 +12,13 @@ import (
 )
 
 func main() {
+
+	flag.Parse()
+
+	if flag.NArg() < 1 || flag.NArg() > 1 {
+		log.Fatal("not arg")
+	}
+
 	conn, err := grpc.Dial("localhost:8080", grpc.WithInsecure())
 
 	if err != nil {
@@ -19,10 +27,10 @@ func main() {
 
 	client := pb.NewAPIClient(conn)
 
-	msg, err := client.FindAuthor(context.Background(), &pb.Book{Book: "1984"})
+	msg, err := client.FindAuthor(context.Background(), &pb.Book{Book: flag.Arg(0)})
 	if err != nil {
 		log.Println(err)
 	}
 
-	fmt.Println(msg.GetAuthor())
+	fmt.Println(msg.Authors)
 }
